@@ -6,15 +6,25 @@ public class Main {
 
     public static void main(String[] args) {
         Random r = new Random();
-	    int[] arr = new int[4];
+	    int[] arr = new int[10_000_000];
 	    for (int i = 0; i < arr.length; i++){
-	        arr[i] = r.nextInt(10);
+	        arr[i] = r.nextInt();
         }
 
+	    long start = System.nanoTime();
 	    int[] sortedArr = mergeSort(arr, 0, arr.length - 1);
+        long end = System.nanoTime();
+        long singleRes = end - start;
+        System.out.println("Single-threaded: " + singleRes + "ns");
 
-
+        start = System.nanoTime();
 	    parallelSort(arr);
+        end = System.nanoTime();
+        long multiRes = end - start;
+        System.out.println("Multi-threaded: " + multiRes + "ns");
+
+        System.out.println("Multi - Single --> " + (multiRes - singleRes));
+        System.out.println("Is multi faster? " + (multiRes - singleRes < 0 ));
 
         //Arrays.sort(arr);
 	    for (int i = 0; i < arr.length; i++){
